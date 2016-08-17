@@ -2,25 +2,30 @@ package com.example.sarika.checkprime;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Random;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
-
+    private TextView question;
+    private Button button_true;
+    private Button button_false;
+    private Button button_next;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        TextView question = (TextView) findViewById(R.id.text_question);
+        question = (TextView) findViewById(R.id.text_question);
         /* Get the value from the saved instance if instance saved and displaying the question */
         if (savedInstanceState != null) {
             int val = savedInstanceState.getInt(TAG);
@@ -30,7 +35,42 @@ public class MainActivity extends ActionBarActivity {
             int val = r1.nextInt(1000 - 1) + 1;
             question.setText(val + " is a prime number");
         }
+        button_true=(Button) findViewById(R.id.button_true);
+        button_false=(Button) findViewById(R.id.button_false);
+        button_next=(Button) findViewById(R.id.button_next);
 
+        button_true.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String ques = (String) question.getText();
+                String quest[] = ques.split(" ");
+                int value = Integer.parseInt(quest[0]);
+                view.requestFocus();
+                CheckTrue(value);
+            }
+        });
+
+        button_false.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String ques = (String) question.getText();
+                String quest[] = ques.split(" ");
+                int value = Integer.parseInt(quest[0]);
+                view.requestFocus();
+                CheckFalse(value);
+            }
+        });
+
+        /* Sets the TextView to display a new question when next button is pressed */
+        button_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Random r1 = new Random();
+                int val = r1.nextInt(1000 - 1) + 1;
+                question.setText(val + " is a prime number");
+                view.requestFocus();
+            }
+        });
     }
 
     @Override
@@ -58,7 +98,6 @@ public class MainActivity extends ActionBarActivity {
     /* Saving the instance */
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
-        TextView question = (TextView) findViewById(R.id.text_question);
         String ques = question.getText().toString();
         String quest[] = ques.split(" ");
         int val = Integer.parseInt(quest[0]);
@@ -67,13 +106,8 @@ public class MainActivity extends ActionBarActivity {
     }
 
     /* Displays Correct if the number is not prime and Wrong if the number is prime through the use of a toast */
-    public void CheckFalse(View view) {
-        TextView question = (TextView) findViewById(R.id.text_question);
-        String ques = (String) question.getText();
-        String quest[] = ques.split(" ");
-        int value = Integer.parseInt(quest[0]);
+    public void CheckFalse(int value) {
         int c = Check(value);
-        view.requestFocus();
         if (c == 0) {
             Toast.makeText(this, "Correct", Toast.LENGTH_SHORT).show();
         } else if (c == 1) {
@@ -86,13 +120,8 @@ public class MainActivity extends ActionBarActivity {
     }
 
     /* Displays Correct if the number is prime and Wrong if the number is not prime through the use of a toast */
-    public void CheckTrue(View view) {
-        TextView question = (TextView) findViewById(R.id.text_question);
-        String ques = (String) question.getText();
-        String quest[] = ques.split(" ");
-        int value = Integer.parseInt(quest[0]);
+    public void CheckTrue(int value) {
         int c = Check(value);
-        view.requestFocus();
         if (c == 1) {
             Toast.makeText(this, "Correct", Toast.LENGTH_SHORT).show();
         } else if (c == 0) {
@@ -102,15 +131,6 @@ public class MainActivity extends ActionBarActivity {
         }
 
 
-    }
-
-    /* Sets the TextView to display a new question */
-    public void GoNext(View view) {
-        TextView question = (TextView) findViewById(R.id.text_question);
-        Random r1 = new Random();
-        int val = r1.nextInt(1000 - 1) + 1;
-        question.setText(val + " is a prime number");
-        view.requestFocus();
     }
 
     /* Returns integer value 0 if the passed argument is not prime and returns 1 if prime */
@@ -134,4 +154,3 @@ public class MainActivity extends ActionBarActivity {
 
 
 }
-

@@ -40,8 +40,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:onClick="CheckTrue"
-            android:text="@string/True" />
+            android:text="@string/True"
+            android:drawableLeft="@drawable/correct" />
 
         <Button
             android:id="@+id/button_false"
@@ -50,8 +50,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
             android:background="@android:color/transparent"
-            android:onClick="CheckFalse"
-            android:text="@string/False" />
+            android:text="@string/False"
+            android:drawableLeft="@drawable/wrong" />
 
     </LinearLayout>
 
@@ -66,7 +66,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_marginLeft="500dp"
-            android:onClick="GoNext"
             android:text="@string/Next" />
     </LinearLayout>
 
